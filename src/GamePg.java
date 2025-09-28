@@ -95,7 +95,7 @@ public class GamePg extends JPanel implements ActionListener {
         parentRoom.setBounds(0, 0, 1500, 800);
         add(parentRoom);
 
-        new Audio("tickingClock.wav");
+        new Audio("tickingClock.wav",true);
         startPhaseTimer();
     }
 
@@ -153,25 +153,26 @@ public class GamePg extends JPanel implements ActionListener {
             JOptionPane.showMessageDialog(parentFrame, "Game Over! Time's up!\nThe Mob Boss escaped!");
         }
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         long currentTime = System.currentTimeMillis();
         boolean gameOver = currentTime - gameStartTime >= TOTAL_GAME_TIME;
 
+        if (gameOver) {
+            return;
+        }
+
         for (int i = 0; i < cardButtons.length; i++) {
             if (e.getSource() == cardButtons[i]) {
-
-                // Always show clues in reading phase
                 if (!canKill) {
                     clueDisplay.setText(clues[i]);
                     clueDisplay.setForeground(isClicked[i] ? Color.LIGHT_GRAY : Color.YELLOW);
                     clueViewed[i] = true;
-                    // Don't return here, let the loop continue to check other conditions
-                    continue; // Changed from 'return' to 'continue'
+                    return;
                 }
 
-                // Kill phase logic
-                if (!gameOver && canKill && !hasKilledThisPhase && !isClicked[i]) {
+                if (canKill && !hasKilledThisPhase && !isClicked[i]) {
                     isClicked[i] = true;
                     cardButtons[i].setIcon(new ImageIcon("3.png"));
                     labelButtons[i].setIcon(new ImageIcon("dead.png"));
@@ -179,12 +180,16 @@ public class GamePg extends JPanel implements ActionListener {
                     lastKillTime = currentTime;
 
                     if (i == 3) {
-                        showWinScreen();
+                        WinCondition winC = new WinCondition();
                         return;
                     }
 
-                    clueDisplay.setText("Suspect " + (i + 1) + " eliminated!");
-                    clueDisplay.setForeground(Color.RED);
+                    if (i != 3) {
+                        clueDisplay.setText("Wrong suspect! The Mafia Boss is still out there!");
+                        if (currentTime==0){
+                            LoseCondition loseC = new LoseCondition();
+                        }
+                    }
                     break;
                 }
             }

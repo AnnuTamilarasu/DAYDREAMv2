@@ -5,7 +5,7 @@ import java.awt.event.*;
 public class Tutorial extends JPanel implements KeyListener, ActionListener {
 
     JButton play;
-    JLabel[] labels = new JLabel[5];
+    JLabel[] labels = new JLabel[6];
     int currentLabelIndex = 0;
     Color highlightColor = new Color(255, 214, 214);
     Color normalColor = new Color(85, 85, 85);
@@ -45,7 +45,7 @@ public class Tutorial extends JPanel implements KeyListener, ActionListener {
         labels[2] = createLabel(info2);
         labels[3] = createLabel(info3);
         labels[4] = createLabel(info4);
-        labels[4] = createLabel(info5);
+        labels[5] = createLabel(info5);
 
         for (JLabel label : labels) add(label);
     }
@@ -126,7 +126,7 @@ public class Tutorial extends JPanel implements KeyListener, ActionListener {
         int y = 200;
         for (JLabel label : labels) {
             label.setBounds(width / 2 - 450, y, 900, 50);
-            y += 120;
+            y += 70;
         }
 
         play.setBounds(width / 2 - 175, y, 350, 170);
