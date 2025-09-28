@@ -13,13 +13,13 @@ public class GamePg extends JPanel implements ActionListener {
     String currLabelPath = new String();
     JLabel[] labelButtons = new JLabel[7];
     //label path
-    String lp1 = "tbd";
-    String lp2 = "tbd";
-    String lp3 = "tbd";
-    String lp4 = "tbd";
-    String lp5 = "tbd";
-    String lp6 = "tbd";
-    String lp7 = "tbd";
+    String lp1 = "member1.png";
+    String lp2 = "member2.png";
+    String lp3 = "member3.png";
+    String lp4 = "member4.png";
+    String lp5 = "member5.png";
+    String lp6 = "member6.png";
+    String lp7 = "member7.png";
     // Create an immutable List of Strings
     List<String> labelPath = List.of(lp1, lp2, lp3, lp4, lp5, lp6, lp7);
 
