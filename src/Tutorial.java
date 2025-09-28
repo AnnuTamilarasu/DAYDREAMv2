@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-/* skbiidi */
 public class Tutorial extends JPanel {
     JLabel background;
     Font f = new Font("Arial", Font.BOLD, 30);
