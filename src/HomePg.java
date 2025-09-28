@@ -53,17 +53,10 @@ public class HomePg extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == play) {
-            Audio.stopClip();
-            GamePg gamePanel = new GamePg();
-            setContentPane(gamePanel);
-        }
-    /*
-    else if (e.getSource() == tutorial) {
+        if (e.getSource() == tutorial) {
         Tutorial tutorialPanel = new Tutorial();
         setContentPane(tutorialPanel);
-    }
-    */
+        }
         revalidate();
         repaint();
     }
