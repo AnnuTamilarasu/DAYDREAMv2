@@ -33,7 +33,7 @@ public class HomePg extends JFrame implements ActionListener {
 
     public void elements(JLabel container) {
         play = new JButton(new ImageIcon(PlayPath)); // assign directly to field
-        setupButton(play, 570, 270, 350, 170);
+        setupButton(play, 570, 570, 350, 170);
         container.add(play);
 
         /*

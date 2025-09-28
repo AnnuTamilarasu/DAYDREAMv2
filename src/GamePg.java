@@ -1,29 +1,40 @@
+import java.awt.event.*;
 import javax.swing.*;
-import java.awt.*;
 
-public class GamePg extends JPanel {
-    JButton[] nums = new JButton[9];
-    JPanel numPanel;
-    JLabel background;
-    String bgImgPath = "hrdhrh";
-    int selectedNumber = -1;
-    Font f = new Font("Arial", Font.BOLD, 50);
-    /* Skibidi */
-    JPanel guiPanel;
+public class GamePg extends JPanel implements ActionListener {
+
+    JButton cardButton;
+    final String CardPath = "DODplay.png";
 
     public GamePg() {
-        this.setLayout(null);
+        setLayout(null);
 
-        JPanel bgPanel = new JPanel(null);
-        bgPanel.setBounds(0, 0, 1500, 750);
-        this.add(bgPanel);
+        // Background
+        JLabel background = new JLabel(new ImageIcon("mafiaGame.png"));
+        background.setBounds(0, 0, 1500, 800);
+        background.setLayout(null);
+        add(background);
 
-        guiPanel = new JPanel(null);
-        guiPanel.setBounds(950, 170, 300, 300);
-        guiPanel.setOpaque(false);
-        this.add(guiPanel);
+        // Card Button
+        cardButton = new JButton(new ImageIcon(CardPath));
+        setupButton(cardButton, 570, 770, 350, 170);
+        background.add(cardButton);
+    }
 
-        this.setComponentZOrder(bgPanel, this.getComponentCount() - 1);
-        this.setVisible(true);
+    public void setupButton(JButton button, int xPos, int yPos, int width, int height) {
+        button.setBounds(xPos, yPos, width, height);
+        button.setBorderPainted(false);
+        button.setFocusPainted(false);
+        button.setContentAreaFilled(false);
+        button.addActionListener(this);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == cardButton) {
+            // For now, you can print something or call a method to advance the game
+            System.out.println("Card clicked!");
+            // Example: swap to a new panel or update game state
+        }
     }
 }
