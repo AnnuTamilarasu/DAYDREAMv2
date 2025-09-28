@@ -61,7 +61,7 @@ public class GamePg extends JPanel implements ActionListener {
 
                 if (isClicked[i]) {
                     cardButtons[i].setIcon(new ImageIcon("3.png")); // card selected
-                    System.out.println("Card " + (i + 1) + " selected!"); //comment c
+                    System.out.println("Card " + (i + 1) + " selected!"); //comment cege
                 }
             }
         }
