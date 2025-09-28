@@ -8,7 +8,7 @@ public class GamePg extends JPanel {
     String bgImgPath = "hrdhrh";
     int selectedNumber = -1;
     Font f = new Font("Arial", Font.BOLD, 50);
-
+    /* Skibidi */
     JPanel guiPanel;
 
     public GamePg() {
