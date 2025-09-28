@@ -1,102 +1,124 @@
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.List;
-import java.awt.*;
 
 public class GamePg extends JPanel implements ActionListener {
 
     JButton[] cardButtons = new JButton[7];
     String CardPath = "1.png";
     ParentRoomPanel parentRoom;
-    boolean[] isClicked = new boolean[7];
-    boolean[] clueViewed = new boolean[7];
+    boolean[] isClicked= new boolean[7];
 
-    long gameStartTime;
-    long lastKillTime = 0;
-    final int PHASE_DURATION = 20000;
-    final int TOTAL_GAME_TIME = 120000;
-    boolean canKill = false;
-    boolean hasKilledThisPhase = false;
-
+    //Label
+    String currLabelPath = new String();
     JLabel[] labelButtons = new JLabel[7];
-    JLabel background;
+    //label path
+//<<<<<<< HEAD
+    String lp1 = "tbd";
+    String lp2 = "tbd";
+    String lp3 = "tbd";
+    String lp4 = "tbd";
+    String lp5 = "tbd";
+    String lp6 = "tbd";
+    String lp7 = "tbd";
+//=======
+    String lp1 = "member1.png";
+    String lp2 = "member2.png";
+    String lp3 = "member3.png";
+    String lp4 = "member4.png";
+    String lp5 = "member5.png";
+    String lp6 = "member6.png";
+    String lp7 = "member7.png";
+//>>>>>>> cf7df2d2a0c77a0c23dec4ffb66d572271d924d0
+    // Create an immutable List of Strings
+    List<String> labelPath = List.of(lp1, lp2, lp3, lp4, lp5, lp6, lp7);
 
-    List<String> labelPath = List.of(
-            "member1.png",
-            "member2.png",
-            "member3.png",
-            "member4.png",
-            "member5.png",
-            "member6.png",
-            "member7.png"
-    );
-
-    String[] clues = {
-            "Works in accounting, very quiet",
-            "Has access to company files",
-            "Often seen arguing with the boss",
-            "Enjoys drinking at the bar",
-            "New employee, seems nervous",
-            "Has been with company for 10 years",
-            "Always leaves work early on Fridays"
-    };
-
-    JLabel clueDisplay;
-    String winpopimg = "winningScreen.png";
-    Timer phaseTimer;
 
     public GamePg() {
         setLayout(null);
-        gameStartTime = System.currentTimeMillis();
 
-        background = new JLabel(new ImageIcon("mafiaGame.png"));
+        JLabel background = new JLabel(new ImageIcon("mafiaGame.png"));
         background.setBounds(0, 0, 1500, 800);
         background.setLayout(null);
         add(background);
 
         int panelWidth = 1500;
         int numCards = cardButtons.length;
-        int spacing = 20;
-        int cardWidth = (panelWidth - (numCards + 1) * spacing) / numCards;
-        int cardHeight = (int) (cardWidth * 450.0 / 300.0);
 
+        int spacing = 20;
+        int totalSpacing = (numCards + 1) * spacing;
+        int availableWidth = panelWidth - totalSpacing;
+        int cardWidth = availableWidth / numCards;
+
+        int originalWidth = 300;
+        int originalHeight = 450;
+        double aspectRatio = (double) originalHeight / originalWidth;
+        int cardHeight = (int) (cardWidth * aspectRatio);
+
+        //Labels
+//<<<<<<< HEAD
+        int space = 20;
+        int panWidth = 1500;
         int ogWidthl = 1000;
         int ogHeightl = 395;
         int numLabels = cardButtons.length;
+//        int widthVal =
+//        double aspectRatiol = (double) ogWidthl / ogHeightl;
+//        int totSpacel = (labelButtons.length + 1) * spacing;
+//        int avaWidthl = panelWidth - totSpacel;
+//        int labelWidth = availableWidth / numLabels;
+//        int labelHeight = (int) (avaWidthl * aspectRatiol); //aspectRatiol adjusts height
         int[] lx = new int[numLabels];
-        for (int i = 0; i < numLabels; i++) lx[i] = 10 + i * 200;
-        int ly = 600;
+        for (int i = 0; i < numLabels; i++) {
+            lx[i] = 10 + i;
+        }
+        int ly = 600; //screen is 800
         int lwidth = 134;
-        int lheight = (int) (ogHeightl * lwidth / ogWidthl);
+        double lheight = (double) (ogWidthl * ogHeightl) / (double) lwidth;
+        System.out.println("lheight:" + lheight);
 
+
+//=======
+        int numLabels = labelButtons.length;
+        int labelWidth = availableWidth / numLabels;
+        int labelHeight = (int) (labelWidth * aspectRatio);
+//>>>>>>> cf7df2d2a0c77a0c23dec4ffb66d572271d924d0
+
+        //Buttons
         for (int i = 0; i < numCards; i++) {
             int x = spacing + i * (cardWidth + spacing);
-            int y = 350 - (cardHeight / 2);
+            int y = 350 - (cardHeight / 2); // moved further up
             cardButtons[i] = new JButton(new ImageIcon(CardPath));
             setupButton(cardButtons[i], x, y, cardWidth, cardHeight);
             background.add(cardButtons[i]);
         }
 
+        //Labels
         for (int i = 0; i < numLabels; i++) {
-            labelButtons[i] = new JLabel(new ImageIcon(labelPath.get(i)));
-            labelButtons[i].setBounds(lx[i], ly, lwidth, lheight);
+//<<<<<<< HEAD
+//            int lx = spacing + i * (labelWidth + spacing);
+//            int ly = 350 - (labelHeight / 2); // moved further up
+            currLabelPath = labelPath.get(i);
+            System.out.println("currLabelPath:" + currLabelPath);
+            labelButtons[i] = new JLabel(new ImageIcon(currLabelPath));
+            labelButtons[i].setBounds(lx[i], ly, lwidth, (int) lheight);
+//=======
+            int lx = spacing + i * (labelWidth + spacing);
+            int ly = 350 - (labelHeight / 2); // moved further up
+            currLabelPath = labelPath.get(i);
+            System.out.println("currLabelPath:" + currLabelPath);
+            labelButtons[i] = new JLabel(new ImageIcon(currLabelPath));
+            labelButtons[i].setBounds(lx, ly, labelWidth, labelHeight);
+//>>>>>>> cf7df2d2a0c77a0c23dec4ffb66d572271d924d0
             background.add(labelButtons[i]);
         }
 
-        clueDisplay = new JLabel("Click suspects to read clues", SwingConstants.CENTER);
-        clueDisplay.setFont(new Font("Arial", Font.BOLD, 24));
-        clueDisplay.setForeground(Color.WHITE);
-        clueDisplay.setBounds(450, 150, 700, 50);
-        clueDisplay.setOpaque(true);
-        clueDisplay.setBackground(Color.BLACK);
-        background.add(clueDisplay);
 
         parentRoom = new ParentRoomPanel();
         parentRoom.setBounds(0, 0, 1500, 800);
         add(parentRoom);
 
-        new Audio("tickingClock.wav",true);
-        startPhaseTimer();
+        new Audio("tickingClock.wav");
     }
 
     public void setupButton(JButton button, int xPos, int yPos, int width, int height) {
@@ -107,92 +129,40 @@ public class GamePg extends JPanel implements ActionListener {
         button.addActionListener(this);
     }
 
-    private void startPhaseTimer() {
-        phaseTimer = new Timer(1000, e -> updatePhase());
-        phaseTimer.start();
-    }
-
-    private void updatePhase() {
-        long elapsedTime = System.currentTimeMillis() - gameStartTime;
-        if (elapsedTime >= TOTAL_GAME_TIME) {
-            showGameOverScreen();
-            if (phaseTimer != null) phaseTimer.stop();
-            return;
-        }
-
-        boolean newCanKill = ((int) (elapsedTime / PHASE_DURATION) % 2 == 1);
-
-        if (!canKill && newCanKill) {
-            hasKilledThisPhase = false;
-            clueDisplay.setText("KILL PHASE: Click to eliminate suspects!");
-            clueDisplay.setForeground(Color.RED);
-        } else if (canKill && !newCanKill) {
-            clueDisplay.setText("READING PHASE: Click to read clues");
-            clueDisplay.setForeground(Color.WHITE);
-        }
-
-        canKill = newCanKill;
-    }
-
-    private void showWinScreen() {
-        if (phaseTimer != null) phaseTimer.stop();
-        Audio.stopClip();
-        background.setIcon(new ImageIcon(winpopimg));
-        JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-        if (parentFrame != null) {
-            parentFrame.revalidate();
-            parentFrame.repaint();
-        }
-    }
-
-    private void showGameOverScreen() {
-        if (phaseTimer != null) phaseTimer.stop();
-        Audio.stopClip();
-        JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-        if (parentFrame != null) {
-            JOptionPane.showMessageDialog(parentFrame, "Game Over! Time's up!\nThe Mob Boss escaped!");
-        }
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
-        long currentTime = System.currentTimeMillis();
-        boolean gameOver = currentTime - gameStartTime >= TOTAL_GAME_TIME;
-
-        if (gameOver) {
-            return;
-        }
-
         for (int i = 0; i < cardButtons.length; i++) {
             if (e.getSource() == cardButtons[i]) {
-                if (!canKill) {
-                    clueDisplay.setText(clues[i]);
-                    clueDisplay.setForeground(isClicked[i] ? Color.LIGHT_GRAY : Color.YELLOW);
-                    clueViewed[i] = true;
-                    return;
-                }
+                isClicked[i] = !isClicked[i]; // toggle state
 
-                if (canKill && !hasKilledThisPhase && !isClicked[i]) {
-                    isClicked[i] = true;
-                    cardButtons[i].setIcon(new ImageIcon("3.png"));
-                    labelButtons[i].setIcon(new ImageIcon("dead.png"));
-                    hasKilledThisPhase = true;
-                    lastKillTime = currentTime;
+                if (isClicked[i]) {
+                    cardButtons[i].setIcon(new ImageIcon("3.png")); // card selected
+                    System.out.println("Card " + (i + 1) + " selected!"); //comment cegemm
 
+                    //WIN CONDITION GOES HERE
+//<<<<<<< HEAD
+                    //change screen to different panel
+                    //if i = 3 (character #4 (the Mob Boss))
                     if (i == 3) {
-                        WinCondition winC = new WinCondition();
-                        return;
-                    }
+                        //replace content in JFrame with WinPopup
+                        //Here:
+                        HomePg hp = HomePg.getInstance();
+                        Plykl WinPopup = new Plykl();
+//                        hp.setContentPane(WinPopup);
 
-                    if (i != 3) {
-                        clueDisplay.setText("Wrong suspect! The Mafia Boss is still out there!");
-                        if (currentTime==0){
-                            LoseCondition loseC = new LoseCondition();
-                        }
+
+
+
+
+
                     }
-                    break;
+//=======
+//
+//
+//>>>>>>> cf7df2d2a0c77a0c23dec4ffb66d572271d924d0
                 }
             }
         }
     }
+
 }

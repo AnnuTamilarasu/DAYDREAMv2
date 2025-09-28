@@ -15,14 +15,14 @@ public class ParentRoomPanel extends JPanel {
         background.setLayout(null);
         add(background);
 
-        time = new JLabel("02:00");
+        time = new JLabel("06:00");
         time.setFont(f);
         time.setForeground(new Color(110, 0, 0));
         time.setBounds(650, 60, 300, 100);
         time.setOpaque(false);
         background.add(time);
 
-        ClockThread clock = new ClockThread(this, 2 * 60);
+        ClockThread clock = new ClockThread(this, 6 * 60);
         Thread thread = new Thread(clock);
         thread.start();
     }
@@ -73,7 +73,7 @@ public class ParentRoomPanel extends JPanel {
         private void gameOver() {
             System.out.println("Game Over!");
             JOptionPane.showMessageDialog(panel, "Time's up! Game Over!");
-            Audio.stopClip();
+            Audio.clip.stop();
         }
     }
 }
