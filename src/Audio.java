@@ -1,19 +1,31 @@
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
+
+import javax.sound.sampled.*;
 import java.io.File;
 
 public class Audio {
-    public Audio() {
+    static Clip clip;
+
+    public Audio(String audioPath) {
         try {
-            File file = new File("C:/Users/anany/Downloads/tsubaki-soothing-calm-piano-music-144414.wav");
-            AudioInputStream inputStream = AudioSystem.getAudioInputStream(file); // file inside resources
-            Clip clip = AudioSystem.getClip();
+            File file = new File(audioPath); // convert mp3 to wav
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(file);
+            clip = AudioSystem.getClip();
             clip.open(inputStream);
-            clip.loop(Clip.LOOP_CONTINUOUSLY); // loop forever
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
             clip.start();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+    public static void clip1(){
+        new Audio("tickingClock.wav");
+    }
+    public static void clip2(){
+        new Audio("tickingClock.wav");
+    }
+    public void stop() {
+        if (clip != null && clip.isRunning()) {
+            clip.stop();
         }
     }
 }

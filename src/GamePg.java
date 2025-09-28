@@ -3,22 +3,46 @@ import javax.swing.*;
 
 public class GamePg extends JPanel implements ActionListener {
 
-    JButton cardButton;
-    final String CardPath = "DODplay.png";
+    JButton[] cardButtons = new JButton[7];
+    String CardPath = "1.png";
+    ParentRoomPanel parentRoom;
+    boolean[] isClicked= new boolean[7];
 
     public GamePg() {
         setLayout(null);
 
-        // Background
         JLabel background = new JLabel(new ImageIcon("mafiaGame.png"));
         background.setBounds(0, 0, 1500, 800);
         background.setLayout(null);
         add(background);
 
-        // Card Button
-        cardButton = new JButton(new ImageIcon(CardPath));
-        setupButton(cardButton, 570, 770, 350, 170);
-        background.add(cardButton);
+        int panelWidth = 1500;
+        int numCards = cardButtons.length;
+
+        int spacing = 20;
+        int totalSpacing = (numCards + 1) * spacing;
+        int availableWidth = panelWidth - totalSpacing;
+        int cardWidth = availableWidth / numCards;
+
+        int originalWidth = 300;
+        int originalHeight = 450;
+        double aspectRatio = (double) originalHeight / originalWidth;
+        int cardHeight = (int) (cardWidth * aspectRatio);
+
+        for (int i = 0; i < numCards; i++) {
+            int x = spacing + i * (cardWidth + spacing);
+            int y = 350 - (cardHeight / 2); // moved further up
+            cardButtons[i] = new JButton(new ImageIcon(CardPath));
+            setupButton(cardButtons[i], x, y, cardWidth, cardHeight);
+            background.add(cardButtons[i]);
+        }
+
+
+        parentRoom = new ParentRoomPanel();
+        parentRoom.setBounds(0, 0, 1500, 800);
+        add(parentRoom);
+
+        new Audio("tickingClock.wav");
     }
 
     public void setupButton(JButton button, int xPos, int yPos, int width, int height) {
@@ -31,10 +55,16 @@ public class GamePg extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == cardButton) {
-            // For now, you can print something or call a method to advance the game
-            System.out.println("Card clicked!");
-            // Example: swap to a new panel or update game state
+        for (int i = 0; i < cardButtons.length; i++) {
+            if (e.getSource() == cardButtons[i]) {
+                isClicked[i] = !isClicked[i]; // toggle state
+
+                if (isClicked[i]) {
+                    cardButtons[i].setIcon(new ImageIcon("3.png")); // card selected
+                    System.out.println("Card " + (i + 1) + " selected!");
+                }
+            }
         }
     }
+
 }
