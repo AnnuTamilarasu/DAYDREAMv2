@@ -11,6 +11,8 @@ public class HomePg extends JFrame implements ActionListener {
     final String HomePath = "mafiaHome.png";
     final String PlayPath = "DODplay.png";
 
+    private static HomePg instance;
+
     public HomePg() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(0, 0, 1500, 800);
@@ -52,6 +54,15 @@ public class HomePg extends JFrame implements ActionListener {
         button.setContentAreaFilled(false);
         button.addActionListener(this);
     }
+
+    //WinPopup (Plykl) activated in GamePg
+    public static HomePg getInstance() {
+        if (instance == null) {
+            instance = new HomePg();
+        }
+        return instance;
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
