@@ -5,6 +5,7 @@ import javax.swing.*;
 public class HomePg extends JFrame implements ActionListener {
 
     JButton play;
+
     // JButton tutorial; // optional if you add it later
     JPanel homePanel;
     JLabel background;
@@ -53,7 +54,7 @@ public class HomePg extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == tutorial) {
+        if (e.getSource() == play) {
         Tutorial tutorialPanel = new Tutorial();
         setContentPane(tutorialPanel);
         }

@@ -1,4 +1,3 @@
-
 import javax.sound.sampled.*;
 import java.io.File;
 
@@ -7,7 +6,7 @@ public class Audio {
 
     public Audio(String audioPath) {
         try {
-            File file = new File(audioPath); // convert mp3 to wav
+            File file = new File(audioPath);
             AudioInputStream inputStream = AudioSystem.getAudioInputStream(file);
             clip = AudioSystem.getClip();
             clip.open(inputStream);
@@ -17,12 +16,15 @@ public class Audio {
             e.printStackTrace();
         }
     }
+
     public static void clip1(){
         new Audio("homeMusic.wav");
     }
+
     public static void clip2(){
         new Audio("tickingClock.wav");
     }
+
     public static void stopClip() {
         if (clip != null && clip.isRunning()) {
             clip.stop();

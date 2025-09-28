@@ -3,121 +3,140 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Tutorial extends JPanel implements KeyListener, ActionListener {
-    JLabel background;
-    Font f = new Font("Arial", Font.BOLD, 30);
-    final String TutorialImgPath = "rhgeth";
 
-    // Labels array and current index for navigation
-    JLabel[] labels = new JLabel[3];
+    JButton play;
+    JLabel[] labels = new JLabel[5];
     int currentLabelIndex = 0;
-    Color highlightColor = new Color(255, 0, 0); // Red for highlighted
-    Color normalColor = new Color(85, 85, 85);   // Gray for normal
+    Color highlightColor = new Color(255, 214, 214);
+    Color normalColor = new Color(85, 85, 85);
+
+    Font labelFont = new Font("Arial", Font.BOLD, 30);
+    Font timeFont = new Font("Arial", Font.BOLD, 80);
+
+    Image backgroundImage;
+    JLabel time;
+    String info0 = "Use arrow keys (<,>) to navigate through the rules.";
+    String info1 = "You have 2 minutes!!! Time is ticking...";
+    String info2 = "For the first 20 seconds, you can only read the clues.";
+    String info3 = "In the next 20 seconds you can kill a suspect.";
+    String info4 = "This repeats until you run out of time.";
+    String info5 = "Press enter to go to the Game";
 
     public Tutorial() {
-        this.setLayout(null);
-        this.setFocusable(true); // Make panel focusable to receive key events
-        this.addKeyListener(this);
+        setLayout(null);
+        setFocusable(true);
+        addKeyListener(this);
 
-        background = Img.bg(this, TutorialImgPath);
-        if (background != null) {
-            this.add(background);
-        }
+        backgroundImage = new ImageIcon("mafiaGame.png").getImage();
 
-        JPanel gifPanel = new JPanel(null);
-        gifPanel.setBounds(350, 60, 500, 500);
-        gifPanel.setOpaque(false);
-        this.add(gifPanel);
+        time = new JLabel("02:00", SwingConstants.CENTER);
+        time.setFont(timeFont);
+        time.setForeground(new Color(110, 0, 0));
+        add(time);
 
-        // Initialize labels
         initializeLabels();
-
-        // Highlight the first label initially
+        createPlayButton();
         highlightCurrentLabel();
     }
 
-    public void initializeLabels() {
-        // Create label 1
-        labels[0] = new JLabel("TUTORIAL INFO 1");
-        labels[0].setFont(f);
-        labels[0].setForeground(normalColor);
-        labels[0].setBounds(1070, 230, 200, 100);
-        labels[0].setVisible(true);
+    private void initializeLabels() {
+        labels[0] = createLabel(info0);
+        labels[1] = createLabel(info1);
+        labels[2] = createLabel(info2);
+        labels[3] = createLabel(info3);
+        labels[4] = createLabel(info4);
+        labels[4] = createLabel(info5);
 
-        // Create label 2
-        labels[1] = new JLabel("TUTORIAL INFO 2");
-        labels[1].setFont(f);
-        labels[1].setForeground(normalColor);
-        labels[1].setBounds(1070, 345, 300, 100);
-        labels[1].setVisible(true);
+        for (JLabel label : labels) add(label);
+    }
 
-        // Create label 3
-        labels[2] = new JLabel("TUTORIAL INFO 3");
-        labels[2].setFont(f);
-        labels[2].setForeground(normalColor);
-        labels[2].setBounds(320, 590, 900, 100);
-        labels[2].setVisible(true);
+    private JLabel createLabel(String text) {
+        JLabel label = new JLabel(text, SwingConstants.CENTER);
+        label.setFont(labelFont);
+        label.setForeground(normalColor);
+        return label;
+    }
 
-        // Add all labels to the panel
-        for (JLabel label : labels) {
-            this.add(label);
-            this.setComponentZOrder(label, 0);
-        }
+    private void createPlayButton() {
+        play = new JButton("PLAY");
+        play.setFont(new Font("Arial", Font.BOLD, 40));
+        play.setBorderPainted(false);
+        play.setFocusPainted(false);
+        play.setContentAreaFilled(false);
+        play.addActionListener(this);
+        add(play);
     }
 
     private void highlightCurrentLabel() {
-        // Reset all labels to normal color
-        for (JLabel label : labels) {
-            label.setForeground(normalColor);
-        }
-
-        // Highlight current label
+        for (JLabel label : labels) label.setForeground(normalColor);
         labels[currentLabelIndex].setForeground(highlightColor);
-        this.repaint();
+        repaint();
+    }
+
+    private void goToGame() {
+        JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        if (parentFrame != null) {
+            Audio.stopClip();
+            parentFrame.setContentPane(new GamePg());
+            parentFrame.revalidate();
+            parentFrame.repaint();
+        }
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        int keyCode = e.getKeyCode();
-
-        switch (keyCode) {
+        switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT:
                 currentLabelIndex = (currentLabelIndex - 1 + labels.length) % labels.length;
                 highlightCurrentLabel();
                 break;
-
             case KeyEvent.VK_RIGHT:
                 currentLabelIndex = (currentLabelIndex + 1) % labels.length;
                 highlightCurrentLabel();
                 break;
-
             case KeyEvent.VK_ENTER:
-                // Skip tutorial and go directly to GamePg
-                JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-                if (parentFrame != null) {
-                    GamePg gamePanel = new GamePg();
-                    parentFrame.setContentPane(gamePanel);
-                    parentFrame.revalidate();
-                    parentFrame.repaint();
-                }
+                goToGame();
                 break;
         }
     }
 
-    @Override public void keyReleased(KeyEvent e) {}
-    @Override public void keyTyped(KeyEvent e) {}
+    @Override
+    public void keyReleased(KeyEvent e) {}
+    @Override
+    public void keyTyped(KeyEvent e) {}
 
     @Override
     public void addNotify() {
         super.addNotify();
         requestFocusInWindow();
     }
+
     @Override
-    public void actionPerformed(ActionEvent e){
-        if (e.getSource() == play) {
-            Audio.stopClip();
-            GamePg gamePanel = new GamePg();
-            setContentPane(gamePanel);
-        }
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == play) goToGame();
     }
 
+    @Override
+    public void doLayout() {
+        super.doLayout();
+        int width = getWidth();
+
+        time.setBounds(width / 2 - 150, 50, 300, 100);
+
+        int y = 200;
+        for (JLabel label : labels) {
+            label.setBounds(width / 2 - 450, y, 900, 50);
+            y += 120;
+        }
+
+        play.setBounds(width / 2 - 175, y, 350, 170);
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (backgroundImage != null) {
+            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+        }
+    }
 }
