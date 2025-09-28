@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="DAYDREAM:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/DAYDREAM_jar</output-path>
+    <root id="archive" name="DAYDREAM.jar">
+      <element id="module-output" name="DAYDREAM" />
+    </root>
+  </artifact>
+</component>
