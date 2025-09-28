@@ -19,7 +19,7 @@ public class GamePg extends JPanel implements ActionListener {
     String lp4 = "member4.png";
     String lp5 = "member5.png";
     String lp6 = "member6.png";
-    String lp7 = "";
+    String lp7 = "member7.png";
     // Create an immutable List of Strings
     List<String> labelPath = List.of(lp1, lp2, lp3, lp4, lp5, lp6, lp7);
 
