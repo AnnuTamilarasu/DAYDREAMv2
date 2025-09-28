@@ -26,7 +26,7 @@ public class HomePg extends JFrame implements ActionListener {
         elements(background);
 
         homePanel.setComponentZOrder(background, homePanel.getComponentCount() - 1);
-
+        Audio.clip1();
         setContentPane(homePanel);
         setVisible(true);
     }
@@ -43,8 +43,6 @@ public class HomePg extends JFrame implements ActionListener {
         */
 
     }
-
-    // Setup button styling and placement
     public void setupButton(JButton button, int xPos, int yPos, int width, int height) {
         button.setBounds(xPos, yPos, width, height);
         button.setBorderPainted(false);
@@ -56,15 +54,16 @@ public class HomePg extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == play) {
+            Audio.stopClip();
             GamePg gamePanel = new GamePg();
             setContentPane(gamePanel);
         }
-        /*
-        else if (e.getSource() == tutorial) {
-            Tutorial tutorialPanel = new Tutorial();
-            setContentPane(tutorialPanel);
-        }
-        */
+    /*
+    else if (e.getSource() == tutorial) {
+        Tutorial tutorialPanel = new Tutorial();
+        setContentPane(tutorialPanel);
+    }
+    */
         revalidate();
         repaint();
     }

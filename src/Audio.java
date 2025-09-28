@@ -18,12 +18,12 @@ public class Audio {
         }
     }
     public static void clip1(){
-        new Audio("tickingClock.wav");
+        new Audio("homeMusic.wav");
     }
     public static void clip2(){
         new Audio("tickingClock.wav");
     }
-    public void stop() {
+    public static void stopClip() {
         if (clip != null && clip.isRunning()) {
             clip.stop();
         }
