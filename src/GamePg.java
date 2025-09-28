@@ -13,6 +13,7 @@ public class GamePg extends JPanel implements ActionListener {
     String currLabelPath = new String();
     JLabel[] labelButtons = new JLabel[7];
     //label path
+//<<<<<<< HEAD
     String lp1 = "tbd";
     String lp2 = "tbd";
     String lp3 = "tbd";
@@ -20,6 +21,15 @@ public class GamePg extends JPanel implements ActionListener {
     String lp5 = "tbd";
     String lp6 = "tbd";
     String lp7 = "tbd";
+//=======
+    String lp1 = "member1.png";
+    String lp2 = "member2.png";
+    String lp3 = "member3.png";
+    String lp4 = "member4.png";
+    String lp5 = "member5.png";
+    String lp6 = "member6.png";
+    String lp7 = "member7.png";
+//>>>>>>> cf7df2d2a0c77a0c23dec4ffb66d572271d924d0
     // Create an immutable List of Strings
     List<String> labelPath = List.of(lp1, lp2, lp3, lp4, lp5, lp6, lp7);
 
@@ -46,6 +56,7 @@ public class GamePg extends JPanel implements ActionListener {
         int cardHeight = (int) (cardWidth * aspectRatio);
 
         //Labels
+//<<<<<<< HEAD
         int space = 20;
         int panWidth = 1500;
         int ogWidthl = 1000;
@@ -67,6 +78,11 @@ public class GamePg extends JPanel implements ActionListener {
         System.out.println("lheight:" + lheight);
 
 
+//=======
+        int numLabels = labelButtons.length;
+        int labelWidth = availableWidth / numLabels;
+        int labelHeight = (int) (labelWidth * aspectRatio);
+//>>>>>>> cf7df2d2a0c77a0c23dec4ffb66d572271d924d0
 
         //Buttons
         for (int i = 0; i < numCards; i++) {
@@ -79,12 +95,21 @@ public class GamePg extends JPanel implements ActionListener {
 
         //Labels
         for (int i = 0; i < numLabels; i++) {
+//<<<<<<< HEAD
 //            int lx = spacing + i * (labelWidth + spacing);
 //            int ly = 350 - (labelHeight / 2); // moved further up
             currLabelPath = labelPath.get(i);
             System.out.println("currLabelPath:" + currLabelPath);
             labelButtons[i] = new JLabel(new ImageIcon(currLabelPath));
             labelButtons[i].setBounds(lx[i], ly, lwidth, (int) lheight);
+//=======
+            int lx = spacing + i * (labelWidth + spacing);
+            int ly = 350 - (labelHeight / 2); // moved further up
+            currLabelPath = labelPath.get(i);
+            System.out.println("currLabelPath:" + currLabelPath);
+            labelButtons[i] = new JLabel(new ImageIcon(currLabelPath));
+            labelButtons[i].setBounds(lx, ly, labelWidth, labelHeight);
+//>>>>>>> cf7df2d2a0c77a0c23dec4ffb66d572271d924d0
             background.add(labelButtons[i]);
         }
 
@@ -115,6 +140,7 @@ public class GamePg extends JPanel implements ActionListener {
                     System.out.println("Card " + (i + 1) + " selected!"); //comment cegemm
 
                     //WIN CONDITION GOES HERE
+//<<<<<<< HEAD
                     //change screen to different panel
                     //if i = 3 (character #4 (the Mob Boss))
                     if (i == 3) {
@@ -130,6 +156,10 @@ public class GamePg extends JPanel implements ActionListener {
 
 
                     }
+//=======
+//
+//
+//>>>>>>> cf7df2d2a0c77a0c23dec4ffb66d572271d924d0
                 }
             }
         }
